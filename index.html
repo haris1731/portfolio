@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harish Ameer — MIS Analyst & Data Specialist</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080c14;--bg2:#0d1220;--bg3:#111827;--amber:#f5a623;--amber2:#ffc84a;--green:#22d3a0;--blue:#38bdf8;--red:#f87171;--border:rgba(245,166,35,.15);--border2:rgba(245,166,35,.08);--text:#e8eaf0;--muted:#6b7a99;--dim:#3d4a63;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;cursor:none;}
+
+/* CURSOR */
+#cur{width:10px;height:10px;background:var(--amber);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:transform .15s;}
+#cur-ring{width:34px;height:34px;border:1.5px solid var(--amber);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);opacity:.55;transition:transform .18s;}
+body.ch #cur{transform:translate(-50%,-50%) scale(2.8);}
+body.ch #cur-ring{transform:translate(-50%,-50%) scale(1.6);}
+
+/* SCANLINES */
+body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px);pointer-events:none;z-index:9990;}
+
+/* GRID */
+.gbg{position:fixed;inset:0;background-image:linear-gradient(rgba(245,166,35,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(245,166,35,.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+
+/* PARTICLES */
+.pt{position:fixed;width:1px;height:1px;background:var(--amber);border-radius:50%;pointer-events:none;z-index:0;opacity:0;animation:fup var(--d) var(--dl) infinite linear;}
+@keyframes fup{0%{opacity:0;transform:translateY(100vh) translateX(0);}10%{opacity:.45;}90%{opacity:.45;}100%{opacity:0;transform:translateY(-80px) translateX(var(--dr));}}
+
+/* BLINK */
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeLeft{from{opacity:0;transform:translateY(-50%) translateX(30px);}to{opacity:1;transform:translateY(-50%) translateX(0);}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;background:rgba(8,12,20,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nlogo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.1em;color:var(--amber);}
+.nlogo span{color:var(--text);}
+.nlinks{display:flex;gap:36px;list-style:none;}
+.nlinks a{color:var(--muted);text-decoration:none;font-size:.82rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;transition:color .2s;position:relative;}
+.nlinks a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--amber);transition:width .3s;}
+.nlinks a:hover{color:var(--amber);}
+.nlinks a:hover::after{width:100%;}
+.ncta{background:transparent;border:1px solid var(--amber);color:var(--amber);padding:8px 20px;font-family:'Outfit',sans-serif;font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:none;transition:all .2s;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);}
+.ncta:hover{background:var(--amber);color:var(--bg);}
+
+/* STATUS BAR */
+.sbar{position:fixed;bottom:0;left:0;right:0;z-index:1000;height:28px;background:var(--amber);display:flex;align-items:center;justify-content:space-between;padding:0 48px;font-size:.7rem;font-weight:700;color:var(--bg);letter-spacing:.08em;}
+.sl,.sr{display:flex;align-items:center;gap:24px;}
+.sdot{width:6px;height:6px;background:var(--bg);border-radius:50%;display:inline-block;margin-right:6px;animation:blink 1.2s infinite;}
+
+/* HERO */
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:90px 48px 80px;overflow:hidden;z-index:1;}
+.hg1{position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(245,166,35,.09) 0%,transparent 70%);top:-150px;right:-150px;pointer-events:none;}
+.hg2{position:absolute;width:450px;height:450px;background:radial-gradient(circle,rgba(34,211,160,.07) 0%,transparent 70%);bottom:-80px;left:-80px;pointer-events:none;}
+.hcontent{max-width:760px;position:relative;z-index:2;}
+.htag{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin-bottom:24px;opacity:0;animation:fadeUp .6s .2s ease forwards;}
+.htag::before{content:'';width:28px;height:1px;background:var(--amber);}
+.hname{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,12vw,10.5rem);line-height:.9;letter-spacing:.02em;margin-bottom:12px;opacity:0;animation:fadeUp .6s .3s ease forwards;}
+.hname .ln1{color:var(--text);}
+.hname .ln2{color:var(--amber);}
+.hrole{font-size:clamp(1rem,2vw,1.25rem);font-weight:300;color:var(--muted);margin-bottom:28px;letter-spacing:.04em;min-height:2.2em;opacity:0;animation:fadeUp .6s .4s ease forwards;}
+.hrole .hl{color:var(--green);font-weight:600;}
+.hdesc{font-size:1rem;color:var(--muted);line-height:1.85;max-width:520px;margin-bottom:44px;font-weight:300;opacity:0;animation:fadeUp .6s .5s ease forwards;}
+.hact{display:flex;gap:16px;flex-wrap:wrap;opacity:0;animation:fadeUp .6s .6s ease forwards;}
+.ba{background:var(--amber);color:var(--bg);border:none;padding:14px 30px;font-family:'Outfit',sans-serif;font-weight:700;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;cursor:none;text-decoration:none;display:inline-flex;align-items:center;gap:8px;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);transition:all .2s;box-shadow:0 6px 24px rgba(245,166,35,.3);}
+.ba:hover{background:var(--amber2);transform:translateY(-2px);}
+.bo{background:transparent;color:var(--text);border:1px solid var(--dim);padding:14px 30px;font-family:'Outfit',sans-serif;font-weight:500;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;cursor:none;text-decoration:none;display:inline-flex;align-items:center;gap:8px;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);transition:all .2s;}
+.bo:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-2px);}
+.hstats{position:absolute;right:48px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px;opacity:0;animation:fadeLeft .8s .7s ease forwards;z-index:2;}
+.sc{background:var(--bg2);border:1px solid var(--border);padding:18px 22px;width:196px;position:relative;overflow:hidden;}
+.sc::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--amber);}
+.snum{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;color:var(--amber);line-height:1;margin-bottom:4px;}
+.slabel{font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+
+/* SECTIONS */
+section{position:relative;z-index:1;padding:96px 48px;}
+.sh{margin-bottom:58px;}
+.sn{font-family:'Bebas Neue',sans-serif;font-size:.88rem;letter-spacing:.2em;color:var(--amber);margin-bottom:6px;}
+.st{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,6vw,5rem);line-height:.95;color:var(--text);letter-spacing:.02em;}
+.st .dm{-webkit-text-stroke:1px var(--dim);color:transparent;}
+.sl2{width:56px;height:2px;background:var(--amber);margin-top:18px;}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ABOUT */
+#about{background:var(--bg2);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);}
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;max-width:1200px;margin:0 auto;}
+.atext p{color:var(--muted);font-size:.98rem;line-height:1.9;margin-bottom:20px;font-weight:300;}
+.atext p strong{color:var(--text);font-weight:600;}
+.ainfo{display:flex;flex-direction:column;gap:11px;}
+.irow{display:flex;align-items:center;gap:16px;padding:12px 17px;background:var(--bg3);border:1px solid var(--border2);border-left:2px solid var(--amber);}
+.ilbl{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:96px;flex-shrink:0;}
+.ival{font-size:.88rem;font-weight:500;color:var(--text);}
+.ival a{color:var(--amber);text-decoration:none;}
+.ival a:hover{text-decoration:underline;}
+
+/* SKILLS */
+#skills{background:var(--bg);}
+.skills-w{max-width:1200px;margin:0 auto;}
+.skgrid{display:grid;grid-template-columns:1fr 1fr;gap:44px;}
+.skcat{background:var(--bg2);border:1px solid var(--border);padding:30px;position:relative;overflow:hidden;}
+.skcat::after{content:attr(data-n);position:absolute;top:-10px;right:14px;font-family:'Bebas Neue',sans-serif;font-size:6rem;color:rgba(245,166,35,.04);line-height:1;pointer-events:none;}
+.cttl{font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:.12em;color:var(--amber);margin-bottom:22px;display:flex;align-items:center;gap:10px;}
+.cttl::before{content:'';width:18px;height:2px;background:var(--amber);}
+.sbars{display:flex;flex-direction:column;gap:14px;}
+.stop{display:flex;justify-content:space-between;margin-bottom:5px;font-size:.82rem;font-weight:500;}
+.spct{color:var(--amber);font-weight:700;}
+.sbbg{height:3px;background:var(--bg3);}
+.sbfill{height:100%;background:linear-gradient(90deg,var(--amber),var(--amber2));width:0%;transition:width 1.2s cubic-bezier(.4,0,.2,1);}
+.stags{display:flex;flex-wrap:wrap;gap:8px;}
+.stag{background:var(--bg3);border:1px solid var(--border);padding:6px 13px;font-size:.76rem;font-weight:500;color:var(--muted);letter-spacing:.04em;transition:all .2s;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);}
+.stag:hover{border-color:var(--amber);color:var(--amber);background:rgba(245,166,35,.06);}
+
+/* EXPERIENCE */
+#experience{background:var(--bg2);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);}
+.expw{max-width:1200px;margin:0 auto;}
+.tline{position:relative;display:flex;flex-direction:column;}
+.tline::before{content:'';position:absolute;left:190px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--amber),transparent);}
+.ti{display:grid;grid-template-columns:190px 1fr;position:relative;padding-bottom:44px;}
+.tdate{padding-top:2px;padding-right:36px;text-align:right;}
+.dr{font-family:'Bebas Neue',sans-serif;font-size:.88rem;letter-spacing:.1em;color:var(--amber);line-height:1.4;}
+.dcur{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-top:4px;display:flex;align-items:center;justify-content:flex-end;gap:4px;}
+.dcur::before{content:'';width:5px;height:5px;background:var(--green);border-radius:50%;animation:blink 1.5s infinite;}
+.tdot{position:absolute;left:186px;top:6px;width:9px;height:9px;background:var(--amber);border:2px solid var(--bg2);transform:rotate(45deg);}
+.tbody{padding-left:36px;padding-bottom:44px;border-bottom:1px solid var(--border2);}
+.ti:last-child .tbody{border-bottom:none;}
+.eco{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin-bottom:5px;font-weight:600;}
+.erole{font-family:'Bebas Neue',sans-serif;font-size:1.9rem;letter-spacing:.04em;color:var(--text);margin-bottom:18px;line-height:1;}
+.epts{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.epts li{display:flex;align-items:flex-start;gap:11px;font-size:.88rem;color:var(--muted);line-height:1.65;font-weight:300;}
+.epts li::before{content:'&#9658;';color:var(--amber);flex-shrink:0;margin-top:2px;font-size:.74rem;}
+.ehl{display:inline-flex;align-items:center;gap:8px;background:rgba(34,211,160,.08);border:1px solid rgba(34,211,160,.2);padding:8px 14px;font-size:.78rem;color:var(--green);font-weight:600;margin-top:14px;letter-spacing:.04em;}
+
+/* EDUCATION */
+#education{background:var(--bg);}
+.edugrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1200px;margin:0 auto;}
+.ecard{background:var(--bg2);border:1px solid var(--border);padding:30px 26px;position:relative;overflow:hidden;transition:all .3s;}
+.ecard::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--amber),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.ecard:hover::before{transform:scaleX(1);}
+.ecard:hover{border-color:rgba(245,166,35,.35);transform:translateY(-4px);}
+.eyr{font-family:'Bebas Neue',sans-serif;font-size:.82rem;letter-spacing:.14em;color:var(--amber);margin-bottom:10px;}
+.edeg{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--text);line-height:1.1;margin-bottom:6px;letter-spacing:.03em;}
+.esch{font-size:.8rem;color:var(--muted);}
+.eico{position:absolute;top:20px;right:20px;font-size:1.7rem;opacity:.12;}
+
+/* CERTIFICATES */
+#certificates{background:var(--bg2);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);}
+.certw{max-width:1200px;margin:0 auto;}
+.certgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.ccard{background:var(--bg3);border:1px solid var(--border);padding:22px 26px;display:flex;align-items:center;gap:18px;transition:all .3s;position:relative;overflow:hidden;}
+.ccard::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(245,166,35,.04),transparent);opacity:0;transition:opacity .3s;}
+.ccard:hover::before{opacity:1;}
+.ccard:hover{border-color:rgba(245,166,35,.4);transform:translateX(5px);}
+.cbadge{width:46px;height:46px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.2);flex-shrink:0;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);}
+.cinfo{flex:1;}
+.cname{font-weight:600;font-size:.9rem;margin-bottom:3px;color:var(--text);}
+.ciss{font-size:.76rem;color:var(--muted);}
+.cchk{font-size:1rem;color:var(--green);flex-shrink:0;}
+
+/* PROJECTS */
+#projects{background:var(--bg);}
+.projw{max-width:1200px;margin:0 auto;}
+.projgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
+.pcard{background:var(--bg2);border:1px solid var(--border);overflow:hidden;transition:all .3s;}
+.pcard:hover{border-color:rgba(245,166,35,.5);transform:translateY(-5px);box-shadow:0 22px 55px rgba(0,0,0,.55);}
+.phead{padding:26px 26px 18px;border-bottom:1px solid var(--border2);background:var(--bg3);position:relative;}
+.pnum{font-family:'Bebas Neue',sans-serif;font-size:.76rem;letter-spacing:.16em;color:var(--amber);margin-bottom:6px;}
+.ptitle{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:.04em;line-height:1.1;}
+.ptype{position:absolute;top:18px;right:18px;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green);background:rgba(34,211,160,.1);padding:4px 9px;border:1px solid rgba(34,211,160,.2);}
+.pbody{padding:22px 26px;}
+.pdesc{font-size:.84rem;color:var(--muted);line-height:1.75;margin-bottom:18px;font-weight:300;}
+.ptech{display:flex;flex-wrap:wrap;gap:6px;}
+.tpill{font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);background:rgba(245,166,35,.08);border:1px solid rgba(245,166,35,.2);padding:3px 9px;}
+
+/* PERSONAL */
+#personal{background:var(--bg2);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);}
+.persw{max-width:1200px;margin:0 auto;}
+.persgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:40px;}
+.prscard{background:var(--bg3);border:1px solid var(--border);padding:30px;transition:all .3s;position:relative;overflow:hidden;}
+.prscard::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--amber),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.prscard:hover::before{transform:scaleX(1);}
+.prscard:hover{border-color:rgba(245,166,35,.3);transform:translateY(-4px);}
+.prsico{font-size:2rem;margin-bottom:14px;}
+.prstitle{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.07em;color:var(--amber);margin-bottom:12px;}
+.prstext{color:var(--muted);font-size:.86rem;line-height:1.8;font-weight:300;}
+.termbox{background:var(--bg3);border:1px solid var(--border);padding:32px;}
+.termhdr{display:flex;align-items:center;gap:7px;margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid var(--border2);}
+.tbtn{width:10px;height:10px;border-radius:50%;}
+.tprompt{color:var(--muted);font-size:.73rem;letter-spacing:.1em;margin-left:8px;}
+.termgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.tfact{display:flex;gap:10px;align-items:flex-start;}
+.tarrow{color:var(--amber);font-size:.8rem;flex-shrink:0;margin-top:2px;}
+.tftext{color:var(--muted);font-size:.84rem;line-height:1.65;}
+
+/* CONTACT */
+#contact{background:var(--bg);}
+.contw{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:72px;}
+.ch2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1;margin-bottom:20px;letter-spacing:.02em;}
+.ch2 .acc{color:var(--amber);}
+.csub{color:var(--muted);font-size:.93rem;line-height:1.8;margin-bottom:36px;font-weight:300;}
+.clinks{display:flex;flex-direction:column;gap:10px;}
+.clink{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--bg2);border:1px solid var(--border);text-decoration:none;color:var(--text);transition:all .2s;font-size:.86rem;}
+.clink:hover{border-color:var(--amber);color:var(--amber);transform:translateX(6px);}
+.clico{font-size:1rem;width:28px;text-align:center;flex-shrink:0;}
+.cform{display:flex;flex-direction:column;gap:14px;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.fgrp{display:flex;flex-direction:column;gap:5px;}
+.flbl{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);}
+.finp,.fta{background:var(--bg2);border:1px solid var(--border);color:var(--text);padding:11px 14px;font-family:'Outfit',sans-serif;font-size:.86rem;outline:none;transition:border-color .2s;resize:vertical;width:100%;}
+.finp:focus,.fta:focus{border-color:var(--amber);}
+.fta{min-height:110px;}
+.ferr{padding:10px 14px;background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);color:var(--red);font-size:.8rem;display:none;}
+.fsub{background:var(--amber);color:var(--bg);border:none;padding:13px 26px;font-family:'Outfit',sans-serif;font-weight:700;font-size:.84rem;letter-spacing:.1em;text-transform:uppercase;cursor:none;transition:all .2s;align-self:flex-start;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);}
+.fsub:hover:not(:disabled){background:var(--amber2);transform:translateY(-2px);}
+.fsub:disabled{opacity:.65;}
+
+/* FOOTER */
+.foot{text-align:center;padding:34px 48px 54px;color:var(--muted);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;border-top:1px solid var(--border2);}
+.foot a{color:var(--amber);text-decoration:none;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--amber);}
+
+/* RESPONSIVE */
+@media(max-width:1100px){.hstats{display:none;}.agrid,.contw{grid-template-columns:1fr;gap:40px;}.skgrid{grid-template-columns:1fr;}.edugrid,.persgrid{grid-template-columns:1fr 1fr;}.certgrid{grid-template-columns:1fr;}}
+@media(max-width:768px){nav{padding:0 20px;}.nlinks{display:none;}section{padding:56px 20px;}#hero{padding:76px 20px 56px;}.hname{font-size:5rem;}.edugrid,.projgrid,.persgrid{grid-template-columns:1fr;}.tline::before{left:0;}.ti{grid-template-columns:1fr;}.tdate{text-align:left;padding-right:0;padding-left:16px;margin-bottom:8px;}.tdot{left:-4px;}.tbody{padding-left:16px;}.frow{grid-template-columns:1fr;}.sbar{padding:0 20px;}.sr{display:none;}.termgrid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-ring"></div>
+<div class="gbg"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nlogo">H<span>arish</span></div>
+  <ul class="nlinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="ncta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Hire Me</button>
+</nav>
+
+<!-- STATUS BAR -->
+<div class="sbar">
+  <div class="sl">
+    <span><span class="sdot"></span>CURRENTLY @ Credgenics</span>
+    <span>HARISH AMEER &mdash; MIS ANALYST &amp; DATA SPECIALIST</span>
+  </div>
+  <div class="sr">
+    <span>BIKANER, RAJASTHAN, INDIA</span>
+    <span id="liveTime">--:--:--</span>
+    <span>&copy; 2025</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hg1"></div><div class="hg2"></div>
+  <div class="hcontent">
+    <div class="htag">MIS Analyst @ Credgenics &middot; Data Analyst &middot; Excel Automation Expert</div>
+    <div class="hname"><div class="ln1">HARISH</div><div class="ln2">AMEER</div></div>
+    <div class="hrole" id="heroRole">Turning raw data into <span class="hl">decisions that matter</span></div>
+    <p class="hdesc">Excel wizard. Dashboard architect. Process automator. I transform messy spreadsheets into powerful, real-time intelligence systems &mdash; reducing reporting time by up to 50%.</p>
+    <div class="hact">
+      <a href="#experience" class="ba">&#8595; View Experience</a>
+      <a href="mailto:harisahmed1731@gmail.com" class="bo">&#9993; Email Me</a>
+    </div>
+  </div>
+  <div class="hstats">
+    <div class="sc"><div class="snum" id="cntYears">0</div><div class="slabel">Years Experience</div></div>
+    <div class="sc"><div class="snum" id="cntCo">0</div><div class="slabel">Companies Worked</div></div>
+    <div class="sc"><div class="snum">50%</div><div class="slabel">Reporting Time Saved</div></div>
+    <div class="sc"><div class="snum" id="cntTools">0</div><div class="slabel">Tools Mastered</div></div>
+    <div class="sc"><div class="snum" id="cntCerts">0</div><div class="slabel">Certifications</div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="sh reveal"><div class="sn">01 / ABOUT</div><div class="st">WHO I <span class="dm">AM</span></div><div class="sl2"></div></div>
+    <div class="agrid">
+      <div class="atext reveal">
+        <p>I'm <strong>Harish Ameer</strong>, a data-driven professional with expertise in MIS operations, client servicing, and advanced Excel automation. Based in Bikaner, Rajasthan, I specialize in building systems that make organizations smarter and faster.</p>
+        <p>Currently at <strong>Credgenics</strong> as MIS Analyst since January 2025 &mdash; architecting the company's reporting backbone and delivering automated dashboards that give leadership a real-time pulse on every KPI that matters.</p>
+        <p>My background spans <strong>HR payroll processing</strong>, <strong>client data management</strong>, <strong>Power BI visualization</strong>, and <strong>Google Workspace automation</strong>. I bring a rare mix of analytical precision and people skills.</p>
+      </div>
+      <div class="ainfo reveal">
+        <div class="irow"><div class="ilbl">Name</div><div class="ival">Harish Ameer</div></div>
+        <div class="irow"><div class="ilbl">Current Role</div><div class="ival">MIS Analyst @ Credgenics</div></div>
+        <div class="irow"><div class="ilbl">Location</div><div class="ival">Bikaner, Rajasthan, India</div></div>
+        <div class="irow"><div class="ilbl">Phone</div><div class="ival"><a href="tel:+918696746270">+91 8696746270</a></div></div>
+        <div class="irow"><div class="ilbl">Email</div><div class="ival"><a href="mailto:harisahmed1731@gmail.com">harisahmed1731@gmail.com</a></div></div>
+        <div class="irow"><div class="ilbl">Website</div><div class="ival"><a href="https://haris1731.github.io" target="_blank" rel="noopener">haris1731.github.io</a></div></div>
+        <div class="irow"><div class="ilbl">Languages</div><div class="ival">Hindi, English</div></div>
+        <div class="irow"><div class="ilbl">Status</div><div class="ival" style="color:var(--green)">&#9679; Employed @ Credgenics</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="skills-w">
+    <div class="sh reveal"><div class="sn">02 / SKILLS</div><div class="st">WHAT I <span class="dm">KNOW</span></div><div class="sl2"></div></div>
+    <div class="skgrid">
+      <div class="skcat reveal" data-n="01">
+        <div class="cttl">Data &amp; Analytics</div>
+        <div class="sbars">
+          <div><div class="stop"><span>Microsoft Excel / VBA</span><span class="spct">95%</span></div><div class="sbbg"><div class="sbfill" data-w="95"></div></div></div>
+          <div><div class="stop"><span>Google Sheets / Apps Script</span><span class="spct">90%</span></div><div class="sbbg"><div class="sbfill" data-w="90"></div></div></div>
+          <div><div class="stop"><span>Power BI</span><span class="spct">80%</span></div><div class="sbbg"><div class="sbfill" data-w="80"></div></div></div>
+          <div><div class="stop"><span>SQL (Intermediate)</span><span class="spct">75%</span></div><div class="sbbg"><div class="sbfill" data-w="75"></div></div></div>
+          <div><div class="stop"><span>Data Visualization</span><span class="spct">88%</span></div><div class="sbbg"><div class="sbfill" data-w="88"></div></div></div>
+        </div>
+      </div>
+      <div class="skcat reveal" data-n="02">
+        <div class="cttl">MIS &amp; Operations</div>
+        <div class="sbars">
+          <div><div class="stop"><span>Dashboard Creation</span><span class="spct">92%</span></div><div class="sbbg"><div class="sbfill" data-w="92"></div></div></div>
+          <div><div class="stop"><span>Report Generation</span><span class="spct">95%</span></div><div class="sbbg"><div class="sbfill" data-w="95"></div></div></div>
+          <div><div class="stop"><span>Payroll / HR Operations</span><span class="spct">85%</span></div><div class="sbbg"><div class="sbfill" data-w="85"></div></div></div>
+          <div><div class="stop"><span>Data Management</span><span class="spct">90%</span></div><div class="sbbg"><div class="sbfill" data-w="90"></div></div></div>
+          <div><div class="stop"><span>Process Automation</span><span class="spct">87%</span></div><div class="sbbg"><div class="sbfill" data-w="87"></div></div></div>
+        </div>
+      </div>
+      <div class="skcat reveal" data-n="03" style="grid-column:1/-1;">
+        <div class="cttl">Tools &amp; Technologies</div>
+        <div class="stags">
+          <span class="stag">Microsoft Excel</span><span class="stag">VBA Macros</span><span class="stag">Google Sheets</span><span class="stag">Apps Script</span><span class="stag">Power BI</span><span class="stag">SQL</span><span class="stag">Pivot Tables</span><span class="stag">Power Query</span><span class="stag">Dashboard Design</span><span class="stag">Report Automation</span><span class="stag">ChatGPT / AI Tools</span><span class="stag">AWS Cloud</span><span class="stag">Email &amp; Call Handling</span><span class="stag">CTC Structuring</span><span class="stag">Payroll Processing</span><span class="stag">MIS Reporting</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="expw">
+    <div class="sh reveal"><div class="sn">03 / EXPERIENCE</div><div class="st">WHERE I'VE <span class="dm">WORKED</span></div><div class="sl2"></div></div>
+    <div class="tline">
+
+      <div class="ti reveal">
+        <div class="tdate"><div class="dr">JAN 2025<br>PRESENT</div><div class="dcur">Current</div></div>
+        <div class="tdot"></div>
+        <div class="tbody">
+          <div class="eco">Credgenics</div>
+          <div class="erole">MIS Analyst</div>
+          <ul class="epts">
+            <li>Driving end-to-end MIS operations &mdash; collecting, structuring, and analysing business data to support strategic decision-making across all teams.</li>
+            <li>Building and maintaining live analytical dashboards giving leadership a real-time pulse on KPIs, sales metrics, and operational performance.</li>
+            <li>Designing automated data pipelines that replace repetitive manual reporting &mdash; saving hours of effort every week across the organisation.</li>
+            <li>Collaborating cross-functionally with sales, finance, and operations to identify data gaps and implement accurate tracking mechanisms.</li>
+            <li>Applying advanced Excel &mdash; dynamic arrays, Power Query, conditional macros &mdash; to transform raw exports into clean, actionable reports.</li>
+            <li>Championing a data-first culture by standardising reporting templates and training team members on best practices.</li>
+          </ul>
+          <div class="ehl">&#128640; Building Credgenics' data backbone from the ground up</div>
+        </div>
+      </div>
+
+      <div class="ti reveal">
+        <div class="tdate"><div class="dr">JUL 2024<br>JAN 2025</div></div>
+        <div class="tdot"></div>
+        <div class="tbody">
+          <div class="eco">DKC Exports</div>
+          <div class="erole">MIS Executive</div>
+          <ul class="epts">
+            <li>Expert in Advanced Excel: dashboards, pivot tables, macros, and full automation using VBA.</li>
+            <li>Designed dynamic, user-friendly sheets for daily reporting and deep data analysis.</li>
+            <li>Automated workflows in Google Sheets using Apps Script, reducing manual tasks significantly.</li>
+            <li>Created real-time dashboards and scheduled reports with automated email triggers.</li>
+            <li>Migrated Excel processes to Google Sheets for better cross-team collaboration.</li>
+          </ul>
+          <div class="ehl">&#9889; Reduced reporting time by 50% through efficient automation</div>
+        </div>
+      </div>
+
+      <div class="ti reveal">
+        <div class="tdate"><div class="dr">JAN 2024<br>JUN 2024</div></div>
+        <div class="tdot"></div>
+        <div class="tbody">
+          <div class="eco">Easy Source HR Pvt. Solutions</div>
+          <div class="erole">Executive &mdash; Client Servicing</div>
+          <ul class="epts">
+            <li>Demonstrated strong organizational, communication, leadership and problem-solving skills while managing complex client projects.</li>
+            <li>Handled complete CTC structuring, gross salary computation, payroll cycles, and TDS certificates.</li>
+            <li>Managed attendance sheets, overtime &amp; leave records, mediclaim, and full &amp; final settlements.</li>
+            <li>Established data collection protocols for high-profile clients; updated all Master data records.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="sh reveal"><div class="sn">04 / EDUCATION</div><div class="st">MY <span class="dm">ACADEMIA</span></div><div class="sl2"></div></div>
+    <div class="edugrid">
+      <div class="ecard reveal"><div class="eico">&#127979;</div><div class="eyr">2020 &mdash; 2023</div><div class="edeg">BSc (PMCs)</div><div class="esch">MGS University &middot; Bachelor's in Science</div></div>
+      <div class="ecard reveal"><div class="eico">&#128218;</div><div class="eyr">2019 &mdash; 2020</div><div class="edeg">Science (XII)</div><div class="esch">Sun Bright School &middot; Higher Secondary</div></div>
+      <div class="ecard reveal"><div class="eico">&#127979;</div><div class="eyr">2017 &mdash; 2018</div><div class="edeg">Intermediate (X)</div><div class="esch">Sun Bright School &middot; Secondary Education</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATES -->
+<section id="certificates">
+  <div class="certw">
+    <div class="sh reveal"><div class="sn">05 / CERTIFICATES</div><div class="st">PROOF OF <span class="dm">SKILLS</span></div><div class="sl2"></div></div>
+    <div class="certgrid">
+      <div class="ccard reveal"><div class="cbadge">&#127942;</div><div class="cinfo"><div class="cname">SQL &mdash; Intermediate</div><div class="ciss">HackerRank &middot; Verified Certification</div></div><div class="cchk">&#10003;</div></div>
+      <div class="ccard reveal"><div class="cbadge">&#9729;</div><div class="cinfo"><div class="cname">AWS Cloud Practitioner (CCP)</div><div class="ciss">Udemy &middot; Cloud Fundamentals</div></div><div class="cchk">&#10003;</div></div>
+      <div class="ccard reveal"><div class="cbadge">&#128202;</div><div class="cinfo"><div class="cname">Data Analyst Certification</div><div class="ciss">Udemy &middot; Full Data Analysis Course</div></div><div class="cchk">&#10003;</div></div>
+      <div class="ccard reveal"><div class="cbadge">&#128200;</div><div class="cinfo"><div class="cname">Advanced Excel Certification</div><div class="ciss">IICS &middot; Macros, Pivot, VBA, Dashboards</div></div><div class="cchk">&#10003;</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="projw">
+    <div class="sh reveal"><div class="sn">06 / PROJECTS</div><div class="st">WHAT I'VE <span class="dm">BUILT</span></div><div class="sl2"></div></div>
+    <div class="projgrid">
+      <div class="pcard reveal"><div class="phead"><div class="pnum">PROJECT 01</div><div class="ptitle">Credgenics<br>Analytics Hub</div><div class="ptype">Current &#9679;</div></div><div class="pbody"><div class="pdesc">Architecting a centralised MIS reporting system at Credgenics &mdash; connecting sales, ops, and finance into a single source of truth with automated daily/weekly reports to leadership.</div><div class="ptech"><span class="tpill">Excel</span><span class="tpill">Power Query</span><span class="tpill">Automation</span><span class="tpill">KPI Tracking</span></div></div></div>
+      <div class="pcard reveal"><div class="phead"><div class="pnum">PROJECT 02</div><div class="ptitle">Real-Time Export<br>MIS Dashboard</div><div class="ptype">Excel + VBA</div></div><div class="pbody"><div class="pdesc">Automated MIS dashboard for DKC Exports tracking shipments, orders, and inventory in real-time with scheduled email reports and embedded charts triggered automatically.</div><div class="ptech"><span class="tpill">Excel</span><span class="tpill">VBA</span><span class="tpill">Pivot Tables</span><span class="tpill">Charts</span></div></div></div>
+      <div class="pcard reveal"><div class="phead"><div class="pnum">PROJECT 03</div><div class="ptitle">HR Payroll<br>Automation System</div><div class="ptype">Google Sheets</div></div><div class="pbody"><div class="pdesc">Complete payroll system with auto-calculated salary slips, TDS computation, attendance tracking, and automated email distribution to employees via Apps Script.</div><div class="ptech"><span class="tpill">Google Sheets</span><span class="tpill">Apps Script</span><span class="tpill">Gmail API</span></div></div></div>
+      <div class="pcard reveal"><div class="phead"><div class="pnum">PROJECT 04</div><div class="ptitle">Client Data<br>Analytics Portal</div><div class="ptype">Power BI</div></div><div class="pbody"><div class="pdesc">Interactive Power BI dashboards for client performance metrics, enabling data-driven hiring and cost optimization decisions in real time.</div><div class="ptech"><span class="tpill">Power BI</span><span class="tpill">DAX</span><span class="tpill">SQL</span><span class="tpill">Data Modeling</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAL -->
+<section id="personal">
+  <div class="persw">
+    <div class="sh reveal"><div class="sn">07 / BEYOND THE DATA</div><div class="st">THE HUMAN <span class="dm">BEHIND</span></div><div class="sl2"></div></div>
+    <div class="persgrid">
+      <div class="prscard reveal"><div class="prsico">&#128293;</div><div class="prstitle">WHAT DRIVES ME</div><div class="prstext">Obsessed with turning messy, unstructured data into clean systems that make people's lives easier. There's something deeply satisfying about watching a 3-hour manual process collapse into a 3-second automated click.</div></div>
+      <div class="prscard reveal"><div class="prsico">&#127769;</div><div class="prstitle">OUTSIDE WORK</div><div class="prstext">When not building dashboards, you'll find me exploring new AI tools, watching tech breakdowns on YouTube, or deep-diving into productivity systems. Learning never stops &mdash; every tool mastered is a superpower added.</div></div>
+      <div class="prscard reveal"><div class="prsico">&#128161;</div><div class="prstitle">MY PHILOSOPHY</div><div class="prstext">Data without context is just noise. Every number tells a story &mdash; you just need to ask the right questions. My job isn't just to report what happened, but to explain <em>why</em> it happened and <em>what to do next.</em></div></div>
+    </div>
+    <div class="termbox reveal">
+      <div class="termhdr">
+        <div class="tbtn" style="background:#f87171;"></div>
+        <div class="tbtn" style="background:var(--amber2);"></div>
+        <div class="tbtn" style="background:var(--green);"></div>
+        <span class="tprompt">harish@portfolio:~$ cat fun_facts.txt</span>
+      </div>
+      <div class="termgrid">
+        <div class="tfact"><span class="tarrow">&#8594;</span><span class="tftext">Started learning Excel to solve one boring task at work &mdash; now it's a superpower driving company-wide decisions.</span></div>
+        <div class="tfact"><span class="tarrow">&#8594;</span><span class="tftext">Holds a HackerRank SQL badge &mdash; because data in tables is just a spreadsheet that went to university.</span></div>
+        <div class="tfact"><span class="tarrow">&#8594;</span><span class="tftext">Bridged BSc Science to Data Analytics &mdash; proving curiosity is the best career counsellor anyone can have.</span></div>
+        <div class="tfact"><span class="tarrow">&#8594;</span><span class="tftext">Earned AWS Cloud Practitioner cert &mdash; future-proofing skills because the cloud isn't going anywhere soon.</span></div>
+        <div class="tfact"><span class="tarrow">&#8594;</span><span class="tftext">From HR payroll to export MIS to SaaS analytics &mdash; thrives in fast-changing, high-stakes environments.</span></div>
+        <div class="tfact"><span class="tarrow">&#8594;</span><span class="tftext">Believes the best dashboard is one your CEO reads in 10 seconds flat &mdash; clarity always beats complexity.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contw">
+    <div class="reveal">
+      <div class="sn">08 / CONTACT</div>
+      <div class="ch2">LET'S WORK<br><span class="acc">TOGETHER</span></div>
+      <p class="csub">Whether you need a data analyst, MIS executive, or Excel automation expert &mdash; I'm ready to contribute. Let's build something great.</p>
+      <div class="clinks">
+        <a href="mailto:harisahmed1731@gmail.com" class="clink"><span class="clico">&#9993;</span>harisahmed1731@gmail.com</a>
+        <a href="tel:+918696746270" class="clink"><span class="clico">&#128222;</span>+91 8696746270</a>
+        <a href="https://haris1731.github.io" target="_blank" rel="noopener" class="clink"><span class="clico">&#127760;</span>haris1731.github.io</a>
+        <a href="https://github.com/haris1731" target="_blank" rel="noopener" class="clink"><span class="clico">&#128187;</span>github.com/haris1731</a>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="sn" style="margin-bottom:18px;">SEND A MESSAGE</div>
+      <form class="cform" id="cForm">
+        <div class="frow">
+          <div class="fgrp"><label class="flbl">Your Name</label><input type="text" name="uname" class="finp" placeholder="John Doe" required></div>
+          <div class="fgrp"><label class="flbl">Email Address</label><input type="email" name="uemail" class="finp" placeholder="john@company.com" required></div>
+        </div>
+        <div class="fgrp"><label class="flbl">Subject</label><input type="text" name="usubject" class="finp" placeholder="Job Opportunity / Collaboration"></div>
+        <div class="fgrp"><label class="flbl">Message</label><textarea name="umessage" class="fta" placeholder="Tell me about the opportunity..." required></textarea></div>
+        <div class="ferr" id="fErr"></div>
+        <button type="submit" class="fsub" id="fBtn">Send Message &#8594;</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="foot">
+  Designed &amp; coded with &#10084; &nbsp;&middot;&nbsp; Harish Ameer &copy; 2025 &nbsp;&middot;&nbsp;
+  <a href="https://haris1731.github.io" target="_blank" rel="noopener">haris1731.github.io</a>
+</div>
+
+<script>
+/* ── CURSOR ──────────────────────────────── */
+(function(){
+  var c = document.getElementById('cur');
+  var r = document.getElementById('cur-ring');
+  var mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',function(e){
+    mx=e.clientX; my=e.clientY;
+    c.style.left=mx+'px'; c.style.top=my+'px';
+  });
+  (function loop(){
+    rx+=(mx-rx)*0.13; ry+=(my-ry)*0.13;
+    r.style.left=rx+'px'; r.style.top=ry+'px';
+    requestAnimationFrame(loop);
+  })();
+  document.querySelectorAll('a,button,.pcard,.ccard,.ecard,.prscard,.stag').forEach(function(el){
+    el.addEventListener('mouseenter',function(){document.body.classList.add('ch');});
+    el.addEventListener('mouseleave',function(){document.body.classList.remove('ch');});
+  });
+})();
+
+/* ── LIVE CLOCK ──────────────────────────── */
+(function tick(){
+  var n=new Date();
+  var s=[n.getHours(),n.getMinutes(),n.getSeconds()].map(function(x){return String(x).padStart(2,'0');}).join(':');
+  var el=document.getElementById('liveTime');
+  if(el) el.textContent=s+' IST';
+  setTimeout(tick,1000);
+})();
+
+/* ── PARTICLES ───────────────────────────── */
+(function(){
+  for(var i=0;i<28;i++){
+    var p=document.createElement('div');
+    p.className='pt';
+    p.style.cssText='left:'+(Math.random()*100).toFixed(1)+'%;--d:'+(9+Math.random()*11).toFixed(1)+'s;--dl:'+(Math.random()*12).toFixed(1)+'s;--dr:'+((Math.random()-.5)*90).toFixed(0)+'px;';
+    document.body.appendChild(p);
+  }
+})();
+
+/* ── COUNT UP ────────────────────────────── */
+function countUp(id,target){
+  var el=document.getElementById(id); if(!el) return;
+  var v=0,step=target/88;
+  var t=setInterval(function(){v+=step;if(v>=target){el.textContent=target;clearInterval(t);}else el.textContent=Math.floor(v);},16);
+}
+var fired=false;
+new IntersectionObserver(function(e){
+  if(e[0].isIntersecting&&!fired){fired=true;countUp('cntYears',2);countUp('cntCo',3);countUp('cntTools',12);countUp('cntCerts',4);}
+},{threshold:0.25}).observe(document.getElementById('hero'));
+
+/* ── SKILL BARS ──────────────────────────── */
+new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.sbfill').forEach(function(b){b.style.width=b.dataset.w+'%';});
+      e.target._observed=true;
+    }
+  });
+},{threshold:0.2}).observe(document.getElementById('skills'));
+
+/* ── SCROLL REVEAL ───────────────────────── */
+new IntersectionObserver(function(entries){
+  entries.forEach(function(e,i){
+    if(e.isIntersecting) setTimeout(function(){e.target.classList.add('visible');},i*70);
+  });
+},{threshold:0.07}).observe(document.documentElement);
+
+// Use individual observer for each reveal
+document.querySelectorAll('.reveal').forEach(function(el){
+  new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('visible');}
+    });
+  },{threshold:0.08}).observe(el);
+});
+
+/* ── TYPEWRITER ──────────────────────────── */
+(function(){
+  var roles=[
+    {t:'Turning raw data into decisions that matter',h:'decisions that matter'},
+    {t:'Excel Automation & VBA Expert',h:'VBA Expert'},
+    {t:'MIS Dashboard Architect',h:'Dashboard Architect'},
+    {t:'Power BI Data Visualizer',h:'Power BI'},
+    {t:'Currently @ Credgenics',h:'Credgenics'}
+  ];
+  var ri=0,ci=0,typing=true;
+  var el=document.getElementById('heroRole');
+  if(!el) return;
+  function render(){
+    var txt=roles[ri].t.slice(0,ci);
+    var hl=roles[ri].h;
+    if(hl&&txt.includes(hl)){
+      el.innerHTML=txt.replace(hl,'<span class="hl">'+hl+'</span>')+'<span style="opacity:.6">|</span>';
+    } else {
+      el.innerHTML=txt+'<span style="opacity:.6">|</span>';
+    }
+  }
+  function run(){
+    if(typing){
+      ci++;render();
+      if(ci>=roles[ri].t.length){typing=false;setTimeout(run,2400);return;}
+      setTimeout(run,50);
+    } else {
+      ci--;render();
+      if(ci<=0){typing=true;ri=(ri+1)%roles.length;setTimeout(run,300);return;}
+      setTimeout(run,25);
+    }
+  }
+  setTimeout(run,1300);
+})();
+
+/* ── CONTACT FORM ────────────────────────── */
+document.getElementById('cForm').addEventListener('submit',async function(e){
+  e.preventDefault();
+  var btn=document.getElementById('fBtn');
+  var err=document.getElementById('fErr');
+  var f=e.target;
+  var name=f.uname.value.trim();
+  var email=f.uemail.value.trim();
+  var subject=f.usubject.value.trim();
+  var message=f.umessage.value.trim();
+  err.style.display='none';
+  btn.textContent='Sending...'; btn.disabled=true;
+  try{
+    var res=await fetch('https://portfolio-backend-x38y.onrender.com',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,subject,message})});
+    var data=await res.json();
+    if(data.ok){
+      btn.textContent='&#10003; Sent!'; btn.style.background='var(--green)'; btn.style.color='var(--bg)';
+      f.reset();
+      setTimeout(function(){btn.textContent='Send Message \u2192';btn.style.background='';btn.style.color='';btn.disabled=false;},4000);
+    } else { showErr(data.error||'Something went wrong.'); reset(); }
+  } catch(ex){ showErr('Server offline \u2014 run contact_server.py on port 5001.'); reset(); }
+  function reset(){btn.textContent='Send Message \u2192';btn.disabled=false;}
+  function showErr(m){err.textContent='\u26A0 '+m;err.style.display='block';}
+});
+</script>
+</body>
+</html>
