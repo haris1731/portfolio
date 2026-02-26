@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Harish Ameer — MIS Analyst & Data Specialist</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 :root{--bg:#080c14;--bg2:#0d1220;--bg3:#111827;--amber:#f5a623;--amber2:#ffc84a;--green:#22d3a0;--blue:#38bdf8;--red:#f87171;--border:rgba(245,166,35,.15);--border2:rgba(245,166,35,.08);--text:#e8eaf0;--muted:#6b7a99;--dim:#3d4a63;}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -616,29 +617,66 @@ document.querySelectorAll('.reveal').forEach(function(el){
   setTimeout(run,1300);
 })();
 
-/* ── CONTACT FORM ────────────────────────── */
-document.getElementById('cForm').addEventListener('submit',async function(e){
+/* ── CONTACT FORM — EmailJS ── */
+var EJS_PUBLIC_KEY  = '49LqcVkGy2IB5HbDk';   // ✅ your public key
+var EJS_SERVICE_ID  = 'service_qxrvxqn';      // ✅ your service id
+var EJS_TEMPLATE_ID = 'template_ldxi3w1';     // ← paste your template id here
+
+emailjs.init({ publicKey: EJS_PUBLIC_KEY });
+
+document.getElementById('cForm').addEventListener('submit', async function(e) {
   e.preventDefault();
-  var btn=document.getElementById('fBtn');
-  var err=document.getElementById('fErr');
-  var f=e.target;
-  var name=f.uname.value.trim();
-  var email=f.uemail.value.trim();
-  var subject=f.usubject.value.trim();
-  var message=f.umessage.value.trim();
-  err.style.display='none';
-  btn.textContent='Sending...'; btn.disabled=true;
-  try{
-    var res=await fetch('https://portfolio-backend-x38y.onrender.com/send',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,subject,message})});
-    var data=await res.json();
-    if(data.ok){
-      btn.textContent='&#10003; Sent!'; btn.style.background='var(--green)'; btn.style.color='var(--bg)';
-      f.reset();
-      setTimeout(function(){btn.textContent='Send Message \u2192';btn.style.background='';btn.style.color='';btn.disabled=false;},4000);
-    } else { showErr(data.error||'Something went wrong. Please try again.'); reset(); }
-  } catch(ex){ showErr('Failed to connect. Email directly: harisahmed1731@gmail.com'); reset(); }
-  function reset(){btn.textContent='Send Message \u2192';btn.disabled=false;btn.style.background='';btn.style.color='';}
-  function showErr(m){err.textContent='\u26A0 '+m;err.style.display='block';}
+  var btn = document.getElementById('fBtn');
+  var err = document.getElementById('fErr');
+  var f   = e.target;
+
+  var name    = f.uname.value.trim();
+  var email   = f.uemail.value.trim();
+  var subject = f.usubject.value.trim();
+  var message = f.umessage.value.trim();
+
+  err.style.display = 'none';
+
+  // Check setup
+  if (EJS_TEMPLATE_ID === 'YOUR_TEMPLATE_ID') {
+    showErr('Contact form not configured yet. Email directly: harisahmed1731@gmail.com');
+    return;
+  }
+
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  try {
+    await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
+      from_name:  name,
+      from_email: email,
+      subject:    subject || '(no subject)',
+      message:    message,
+      reply_to:   email
+    });
+
+    btn.textContent = '\u2713 Message Sent!';
+    btn.style.background = 'var(--green)';
+    btn.style.color = 'var(--bg)';
+    f.reset();
+    setTimeout(function() {
+      btn.textContent = 'Send Message \u2192';
+      btn.style.background = '';
+      btn.style.color = '';
+      btn.disabled = false;
+    }, 4000);
+
+  } catch(ex) {
+    console.error('EmailJS error:', ex);
+    showErr('Failed to send. Please email: harisahmed1731@gmail.com');
+    btn.textContent = 'Send Message \u2192';
+    btn.disabled = false;
+  }
+
+  function showErr(m) {
+    err.textContent = '\u26A0 ' + m;
+    err.style.display = 'block';
+  }
 });
 </script>
 </body>
